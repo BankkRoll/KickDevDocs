@@ -1,0 +1,155 @@
+---
+title: "Subscribe to Events"
+description: "Learn how to subscribe to events with the Kick Public API"
+icon: "left-long-to-line"
+keywords: ['subscribe', 'events', 'kick api']
+---
+
+# Subscribe to Events
+
+<Card title="Get Event Subscriptions" icon="bell" method="GET" path="/events/subscriptions">
+  Retrieve all event subscriptions for the authenticated user or application.
+</Card>
+
+<Card title="Create Event Subscription" icon="bell-plus" method="POST" path="/events/subscriptions">
+  Create a new event subscription to receive webhook notifications.
+</Card>
+
+<Card title="Delete Event Subscription" icon="bell-slash" method="DELETE" path="/events/subscriptions">
+  Remove an existing event subscription.
+</Card>
+
+## Get Event Subscriptions
+
+### Response
+
+<ResponseField name="data" type="array">
+  <Expandable title="properties">
+    <ResponseField name="id" type="string">
+      Subscription ID
+    </ResponseField>
+    <ResponseField name="app_id" type="string">
+      App ID associated with subscription
+    </ResponseField>
+    <ResponseField name="broadcaster_user_id" type="integer">
+      User ID of the broadcaster (if applicable)
+    </ResponseField>
+    <ResponseField name="event" type="string">
+      Event type
+    </ResponseField>
+    <ResponseField name="version" type="integer">
+      Event version
+    </ResponseField>
+    <ResponseField name="method" type="string">
+      Delivery method (webhook)
+    </ResponseField>
+    <ResponseField name="created_at" type="string">
+      Creation timestamp
+    </ResponseField>
+    <ResponseField name="updated_at" type="string">
+      Last update timestamp
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Response status message
+</ResponseField>
+
+<RequestExample>
+```bash
+curl --request GET \
+  --url "https://api.kick.com/public/v1/events/subscriptions" \
+  --header "Authorization: Bearer {YOUR_TOKEN}"
+```
+</RequestExample>
+
+## Create Event Subscription
+
+### Request Body
+
+<ParamField body="events" type="array" required>
+  Array of event objects to subscribe to
+</ParamField>
+
+<ParamField body="events[].name" type="string" required>
+  Event name to subscribe to (e.g., "channel.followed")
+</ParamField>
+
+<ParamField body="events[].version" type="integer" required>
+  Event version
+</ParamField>
+
+<ParamField body="method" type="string">
+  Delivery method (currently only "webhook" is supported)
+</ParamField>
+
+<ParamField body="broadcaster_user_id" type="integer">
+  User ID of the broadcaster (for channel-specific events)
+</ParamField>
+
+### Response
+
+<ResponseField name="data" type="array">
+  <Expandable title="properties">
+    <ResponseField name="name" type="string">
+      Event name
+    </ResponseField>
+    <ResponseField name="version" type="integer">
+      Event version
+    </ResponseField>
+    <ResponseField name="subscription_id" type="string">
+      Unique subscription ID
+    </ResponseField>
+    <ResponseField name="error" type="string">
+      Error message if subscription failed
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Response status message
+</ResponseField>
+
+<RequestExample>
+```bash
+curl --request POST \
+  --url "https://api.kick.com/public/v1/events/subscriptions" \
+  --header "Authorization: Bearer {YOUR_TOKEN}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "events": [
+      {
+        "name": "channel.followed",
+        "version": 1
+      },
+      {
+        "name": "chat.message.sent",
+        "version": 1
+      }
+    ],
+    "method": "webhook",
+    "broadcaster_user_id": 123456
+  }'
+```
+</RequestExample>
+
+## Delete Event Subscription
+
+### Request Parameters
+
+<ParamField query="id" type="string[]" required>
+  Array of subscription IDs to delete
+</ParamField>
+
+### Response
+
+Returns a 204 No Content response on success.
+
+<RequestExample>
+```bash
+curl --request DELETE \
+  --url "https://api.kick.com/public/v1/events/subscriptions?id=abc123&id=def456" \
+  --header "Authorization: Bearer {YOUR_TOKEN}"
+```
+</RequestExample>

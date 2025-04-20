@@ -1,0 +1,372 @@
+---
+title: "Categories"
+description: "Retrieve game and content categories on Kick"
+icon: "list"
+keywords: ['categories', 'games', 'kick api']
+---
+
+# Categories
+
+Categories APIs provide information about the content categories used on Kick, including games and special categories like "Just Chatting".
+
+<Card title="Get Categories" icon="list" method="GET" path="/categories" api="GET /categories">
+  Retrieve a list of all available content categories.
+</Card>
+
+<Card title="Get Category" icon="folder" method="GET" path="/categories/{id}" api="GET /categories/{id}">
+  Retrieve information about a specific category by ID.
+</Card>
+
+## Get Categories
+
+Retrieve a list of all content categories available on the Kick platform.
+
+<Note>
+  No authentication is required for this public endpoint.
+</Note>
+
+### Query Parameters
+
+<ParamField query="limit" type="integer" default="25" initialValue="5">
+  Number of categories to return (max 100)
+</ParamField>
+
+<ParamField query="cursor" type="string">
+  Pagination cursor for retrieving the next set of results
+</ParamField>
+
+<ParamField query="search" type="string">
+  Filter categories by name
+</ParamField>
+
+### Response
+
+<ResponseField name="categories" type="array">
+  <Expandable title="Array of category objects">
+    <ResponseField name="id" type="integer">
+      Unique identifier for the category
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      Name of the category
+    </ResponseField>
+    <ResponseField name="slug" type="string">
+      URL-friendly identifier for the category
+    </ResponseField>
+    <ResponseField name="icon" type="string">
+      URL to the category icon
+    </ResponseField>
+    <ResponseField name="banner" type="string">
+      URL to the category banner image
+    </ResponseField>
+    <ResponseField name="viewers" type="integer">
+      Current number of viewers watching streams in this category
+    </ResponseField>
+    <ResponseField name="tags" type="array">
+      <Expandable title="Array of tag objects">
+        <ResponseField name="id" type="integer">
+          Tag identifier
+        </ResponseField>
+        <ResponseField name="name" type="string">
+          Tag name
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="pagination" type="object">
+  <Expandable title="Pagination object">
+    <ResponseField name="cursor" type="string">
+      Cursor for the next page of results
+    </ResponseField>
+    <ResponseField name="has_more" type="boolean">
+      Whether there are more results available
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+```bash
+curl --request GET \
+  --url "https://api.kick.com/public/v1/categories?limit=5"
+```
+
+```javascript
+const getCategories = async () => {
+  const response = await fetch('https://api.kick.com/public/v1/categories?limit=5', {
+    method: 'GET'
+  });
+  
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
+
+getCategories();
+```
+
+```python
+import requests
+
+params = {
+    'limit': 5
+}
+
+response = requests.get('https://api.kick.com/public/v1/categories', params=params)
+result = response.json()
+print(result)
+```
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Just Chatting",
+      "slug": "just-chatting",
+      "icon": "https://kick-categories.s3.amazonaws.com/just-chatting.png",
+      "banner": "https://kick-categories.s3.amazonaws.com/just-chatting-banner.jpeg",
+      "viewers": 45000,
+      "tags": [
+        {
+          "id": 1,
+          "name": "IRL"
+        },
+        {
+          "id": 2,
+          "name": "Talk Shows"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Fortnite",
+      "slug": "fortnite",
+      "icon": "https://kick-categories.s3.amazonaws.com/fortnite.png",
+      "banner": "https://kick-categories.s3.amazonaws.com/fortnite-banner.jpeg",
+      "viewers": 35000,
+      "tags": [
+        {
+          "id": 3,
+          "name": "Battle Royale"
+        },
+        {
+          "id": 4,
+          "name": "FPS"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Minecraft",
+      "slug": "minecraft",
+      "icon": "https://kick-categories.s3.amazonaws.com/minecraft.png",
+      "banner": "https://kick-categories.s3.amazonaws.com/minecraft-banner.jpeg",
+      "viewers": 25000,
+      "tags": [
+        {
+          "id": 5,
+          "name": "Sandbox"
+        },
+        {
+          "id": 6,
+          "name": "Adventure"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Call of Duty: Warzone",
+      "slug": "call-of-duty-warzone",
+      "icon": "https://kick-categories.s3.amazonaws.com/cod-warzone.png",
+      "banner": "https://kick-categories.s3.amazonaws.com/cod-warzone-banner.jpeg",
+      "viewers": 20000,
+      "tags": [
+        {
+          "id": 3,
+          "name": "Battle Royale"
+        },
+        {
+          "id": 4,
+          "name": "FPS"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "League of Legends",
+      "slug": "league-of-legends",
+      "icon": "https://kick-categories.s3.amazonaws.com/lol.png",
+      "banner": "https://kick-categories.s3.amazonaws.com/lol-banner.jpeg",
+      "viewers": 18000,
+      "tags": [
+        {
+          "id": 7,
+          "name": "MOBA"
+        },
+        {
+          "id": 8,
+          "name": "Strategy"
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "cursor": "eyJpZCI6NSwidmlld2VycyI6MTgwMDB9",
+    "has_more": true
+  }
+}
+```
+</ResponseExample>
+
+## Get Category
+
+Retrieve detailed information about a specific category by its ID.
+
+<Note>
+  No authentication is required for this public endpoint.
+</Note>
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The ID of the category to retrieve
+</ParamField>
+
+### Response
+
+<ResponseField name="category" type="object">
+  <Expandable title="Category object">
+    <ResponseField name="id" type="integer">
+      Unique identifier for the category
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      Name of the category
+    </ResponseField>
+    <ResponseField name="slug" type="string">
+      URL-friendly identifier for the category
+    </ResponseField>
+    <ResponseField name="icon" type="string">
+      URL to the category icon
+    </ResponseField>
+    <ResponseField name="banner" type="string">
+      URL to the category banner image
+    </ResponseField>
+    <ResponseField name="description" type="string">
+      Detailed description of the category
+    </ResponseField>
+    <ResponseField name="viewers" type="integer">
+      Current number of viewers watching streams in this category
+    </ResponseField>
+    <ResponseField name="tags" type="array">
+      <Expandable title="Array of tag objects">
+        <ResponseField name="id" type="integer">
+          Tag identifier
+        </ResponseField>
+        <ResponseField name="name" type="string">
+          Tag name
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="top_channels" type="array">
+      <Expandable title="Array of top channel objects in this category">
+        <ResponseField name="id" type="integer">
+          Channel ID
+        </ResponseField>
+        <ResponseField name="name" type="string">
+          Channel name
+        </ResponseField>
+        <ResponseField name="slug" type="string">
+          Channel slug
+        </ResponseField>
+        <ResponseField name="profile_image" type="string">
+          URL to channel profile image
+        </ResponseField>
+        <ResponseField name="viewers" type="integer">
+          Current viewers on the channel
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+```bash
+curl --request GET \
+  --url "https://api.kick.com/public/v1/categories/1"
+```
+
+```javascript
+const getCategory = async (categoryId) => {
+  const response = await fetch(`https://api.kick.com/public/v1/categories/${categoryId}`, {
+    method: 'GET'
+  });
+  
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
+
+getCategory(1);
+```
+
+```python
+import requests
+
+category_id = 1
+response = requests.get(f'https://api.kick.com/public/v1/categories/{category_id}')
+result = response.json()
+print(result)
+```
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "category": {
+    "id": 1,
+    "name": "Just Chatting",
+    "slug": "just-chatting",
+    "icon": "https://kick-categories.s3.amazonaws.com/just-chatting.png",
+    "banner": "https://kick-categories.s3.amazonaws.com/just-chatting-banner.jpeg",
+    "description": "Engage with streamers who are primarily focused on chatting with their viewers rather than gameplay content. Just Chatting encompasses a wide variety of non-gaming entertainment, including casual conversations, Q&A sessions, and interactive discussions.",
+    "viewers": 45000,
+    "tags": [
+      {
+        "id": 1,
+        "name": "IRL"
+      },
+      {
+        "id": 2,
+        "name": "Talk Shows"
+      }
+    ],
+    "top_channels": [
+      {
+        "id": 12345,
+        "name": "talkshow_host",
+        "slug": "talkshow_host",
+        "profile_image": "https://kick-profiles.s3.amazonaws.com/talkshow_host.jpeg",
+        "viewers": 8500
+      },
+      {
+        "id": 23456,
+        "name": "chatty_streamer",
+        "slug": "chatty_streamer",
+        "profile_image": "https://kick-profiles.s3.amazonaws.com/chatty_streamer.jpeg",
+        "viewers": 5200
+      },
+      {
+        "id": 34567,
+        "name": "irl_broadcaster",
+        "slug": "irl_broadcaster",
+        "profile_image": "https://kick-profiles.s3.amazonaws.com/irl_broadcaster.jpeg",
+        "viewers": 4100
+      }
+    ]
+  }
+}
+```
+</ResponseExample>

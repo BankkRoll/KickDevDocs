@@ -1,0 +1,37 @@
+---
+title: "Public Key"
+description: "Retrieve public keys with the Kick Public API"
+icon: "key"
+keywords: ['public key', 'endpoint', 'kick api']
+---
+
+# Public Key
+
+The Public Key API allows you to retrieve the public key used for verifying signatures.
+
+<Card title="Get Public Key" icon="key" method="GET" path="/public-key">
+  Retrieve the public key used for verifying webhook signatures.
+</Card>
+
+## Get Public Key
+
+### Response
+
+<ResponseField name="data" type="object">
+  <Expandable title="properties">
+    <ResponseField name="public_key" type="string">
+      The public key in PEM format used for verifying webhook signatures
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Response status message
+</ResponseField>
+
+<RequestExample>
+```bash
+curl --request GET \
+  --url "https://api.kick.com/public/v1/public-key"
+```
+</RequestExample>

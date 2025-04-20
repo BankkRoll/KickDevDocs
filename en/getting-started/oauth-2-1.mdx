@@ -1,0 +1,385 @@
+---
+title: "OAuth 2.1"
+description: "The Kick OAuth Flow."
+icon: "unlock"
+keywords: ['oauth 2.1', 'authentication', 'kick api']
+---
+
+## Token Types
+
+There are 2 types of tokens that are available for the Kick Dev API: App Access Token and User Access Token. Each token has a unique OAuth flow to generate the token and are generally used in different scenarios.
+
+### App Access Token
+
+App Access Tokens are generated through the Client Credentials flow. These server-to-server API tokens are the most basic form of token for accessing the API. They can access publicly available data and are ideal for use when user login is not required.
+
+### User Access Token
+
+User Access Tokens are generated through the Authorization Grant flow. These tokens give an application access to the user's information based on the scopes the App has requested. This gives more privileged information and access to an App and will often allow an App to act on the user's behalf.
+
+## Kick OAuth Server
+
+The Kick OAuth server is hosted on id.kick.com.
+
+Information from creating an App will be required in these endpoints. Checkout the Kick Apps Setup page to get the information for your App.
+
+<Info>
+  The host URL for our OAuth server is different from our API server.
+
+  The host URL is: _https://id.kick.com_
+</Info>
+
+## Authorization Endpoint
+
+<Card title="Authorization" icon="key" method="GET" path="/oauth/authorize">
+  Directs the user to the authorization server where they can log in and approve the application's access request.
+</Card>
+
+### Query Parameters
+
+<ParamField query="client_id" type="string" required>
+  Your application's client ID
+</ParamField>
+
+<ParamField query="response_type" type="string" required>
+  Must be `code`
+</ParamField>
+
+<ParamField query="redirect_uri" type="uri" required>
+  The URI to redirect users to after authorization
+</ParamField>
+
+<ParamField query="state" type="string" required>
+  A random string to maintain state between the request and callback
+</ParamField>
+
+<ParamField query="scope" type="string" required>
+  Space-separated list of scopes for request
+</ParamField>
+
+<ParamField query="code_challenge" type="string" required>
+  OAuth code challenge
+</ParamField>
+
+<ParamField query="code_challenge_method" type="string" required>
+  Must be `S256`
+</ParamField>
+
+### Response
+
+<Tabs>
+  <Tab title="200 Success">
+    ```
+    https://yourapp.com/callback?code=<code>&state=random-state
+    ```
+  </Tab>
+  <Tab title="400 Error">
+    ```json
+    {
+      "error": "Invalid request"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Example
+
+<CodeGroup>
+```uri Request
+GET
+https://id.kick.com/oauth/authorize?
+    response_type=code&
+    client_id=<your_client_id>&
+    redirect_uri=<https://yourapp.com/callback>&
+    scope=<scopes>&
+    code_challenge=<code_challenge>&
+    code_challenge_method=S256&
+    state=<random_value>
+```
+
+```uri Response
+https://yourapp.com/callback?code=<code>&state=random-state
+```
+</CodeGroup>
+
+## Token Endpoint
+
+<Card title="Token" icon="key" method="POST" path="/oauth/token">
+  Exchanges the code for a valid access token and a refresh token that can be used to make authorised requests to Kick's API.
+</Card>
+
+### Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/x-www-form-urlencoded`
+</ParamField>
+
+### Request Body
+
+<ParamField body="code" type="string" required>
+  Code received during the Authorization Flow
+</ParamField>
+
+<ParamField body="client_id" type="string" required>
+  Your application's client ID
+</ParamField>
+
+<ParamField body="client_secret" type="string" required>
+  Your application's client secret
+</ParamField>
+
+<ParamField body="redirect_uri" type="string" required>
+  The URI to redirect users to after authorization
+</ParamField>
+
+<ParamField body="grant_type" type="string" required>
+  Must be `authorization_code`
+</ParamField>
+
+<ParamField body="code_verifier" type="string" required>
+  To verify PKCE challenge code created
+</ParamField>
+
+### Response
+
+<Tabs>
+  <Tab title="200 Success">
+    ```json
+    {
+      "access_token": "",
+      "token_type": "",
+      "refresh_token": "",
+      "expires_in": "",
+      "scope": ""
+    }
+    ```
+  </Tab>
+  <Tab title="400 Error">
+    ```json
+    {
+      "error": "Invalid request"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Example
+
+<CodeGroup>
+```http Request
+POST https://id.kick.com/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+client_id=<client_id>
+client_secret=<client_secret>
+redirect_uri=<redirect_uri>
+code_verifier=<code_verifier>
+code=<CODE>
+```
+
+```json Response
+{
+  "access_token": "",
+  "token_type": "",
+  "refresh_token": "",
+  "expires_in": "",
+  "scope": ""
+}
+```
+</CodeGroup>
+
+## App Access Token Endpoint
+
+<Card title="App Access Token" icon="key" method="POST" path="/oauth/token">
+  Uses a client_id and client_secret to generate an app access token which can be used to obtain public data on Kick.
+</Card>
+
+### Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/x-www-form-urlencoded`
+</ParamField>
+
+### Request Body
+
+<ParamField body="client_id" type="string" required>
+  Your application's client ID
+</ParamField>
+
+<ParamField body="client_secret" type="string" required>
+  Your application's client secret
+</ParamField>
+
+<ParamField body="grant_type" type="string" required>
+  Must be `client_credentials`
+</ParamField>
+
+### Response
+
+<Tabs>
+  <Tab title="200 Success">
+    ```json
+    {
+      "access_token": "",
+      "token_type": "",
+      "expires_in": ""
+    }
+    ```
+  </Tab>
+  <Tab title="400 Error">
+    ```json
+    {
+      "error": "Invalid request"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Example
+
+<CodeGroup>
+```http Request
+POST https://id.kick.com/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+client_id=<client_id>
+client_secret=<client_secret>
+```
+
+```json Response
+{
+  "access_token": "",
+  "expires_in": "",
+  "token_type": ""
+}
+```
+</CodeGroup>
+
+## Refresh Token Endpoint
+
+<Card title="Refresh Token" icon="rotate" method="POST" path="/oauth/token">
+  Pass in refresh token and refresh both access and refresh codes.
+</Card>
+
+### Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/x-www-form-urlencoded`
+</ParamField>
+
+### Request Body
+
+<ParamField body="refresh_token" type="string" required>
+  Code received during the Authorization Flow
+</ParamField>
+
+<ParamField body="client_id" type="string" required>
+  Your application's client ID
+</ParamField>
+
+<ParamField body="client_secret" type="string" required>
+  Your application's client secret
+</ParamField>
+
+<ParamField body="grant_type" type="string" required>
+  Must be `refresh_token`
+</ParamField>
+
+### Response
+
+<Tabs>
+  <Tab title="200 Success">
+    ```json
+    {
+      "access_token": "",
+      "token_type": "",
+      "refresh_token": "",
+      "expires_in": "",
+      "scope": ""
+    }
+    ```
+  </Tab>
+  <Tab title="400 Error">
+    ```json
+    {
+      "error": "Invalid request"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Example
+
+<CodeGroup>
+```http Request
+POST https://id.kick.com/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token
+client_id=<client_id>
+client_secret=<client_secret>
+refresh_token=<refresh_token>
+```
+
+```json Response
+{
+  "access_token": "",
+  "token_type": "",
+  "refresh_token": "",
+  "expires_in": "",
+  "scope": ""
+}
+```
+</CodeGroup>
+
+## Revoke Token Endpoint
+
+<Card title="Revoke Token" icon="ban" method="POST" path="/oauth/revoke">
+  Pass in a token to revoke access to that token.
+</Card>
+
+### Headers
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/x-www-form-urlencoded`
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="token" type="string" required>
+  The token to be revoked
+</ParamField>
+
+<ParamField query="token_hint_type" type="string">
+  `access_token` or `refresh_token`
+</ParamField>
+
+### Response
+
+<Tabs>
+  <Tab title="200 Success">
+    OK
+  </Tab>
+  <Tab title="400 Error">
+    ```json
+    {
+      "error": "Invalid request"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Example
+
+<CodeGroup>
+```http Request
+POST https://id.kick.com/oauth/revoke?token=<your_token>&token_hint_type=<token_type>
+Content-Type: application/x-www-form-urlencoded
+```
+
+```text Response
+OK
+```
+</CodeGroup>

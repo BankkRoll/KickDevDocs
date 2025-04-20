@@ -1,0 +1,285 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "Kick SDK",
+  "colors": {
+    "primary": "#00E701",
+    "light": "#00E701",
+    "dark": "#00E701"
+  },
+  "styling": {
+    "eyebrows": "section"
+  },
+  "background": {
+    "decoration": "grid",
+    "color": {
+      "light": "#FFFFFF",
+      "dark": "#000000"
+    }
+  },
+  "favicon": "/favicon.ico",
+  "navigation": {
+    "languages": [
+      {
+        "language": "en",
+        "default": true,
+            "groups": [
+              {
+                "group": "Welcome",
+                "pages": [
+                  "en/welcome"
+                ]
+              },
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "en/getting-started/app-setup",
+                  "en/getting-started/oauth-2-1",
+                  "en/getting-started/scopes"
+                ]
+              },
+              {
+                "group": "APIs",
+                "pages": [
+                  "en/apis/categories",
+                  "en/apis/users",
+                  "en/apis/channels",
+                  "en/apis/chat",
+                  "en/apis/livestreams",
+                  "en/apis/public-key"
+                ]
+              },
+              {
+                "group": "Events",
+                "pages": [
+                  "en/events/introduction",
+                  "en/events/webhooks",
+                  "en/events/subscribe-to-events",
+                  "en/events/webhook-payloads"
+                ]
+              },
+              {
+                "group": "How do I contribute?",
+                "pages": [
+                  "en/how-do-i-contribute/contributing",
+                  "en/how-do-i-contribute/community-driven-projects"
+                ]
+              }
+            ]
+      },
+      {
+        "language": "es",
+            "groups": [
+              {
+                "group": "Bienvenida",
+                "pages": [
+                  "es/welcome"
+                ]
+              },
+              {
+                "group": "Primeros Pasos",
+                "pages": [
+                  "es/getting-started/app-setup",
+                  "es/getting-started/oauth-2-1",
+                  "es/getting-started/scopes"
+                ]
+              },
+              {
+                "group": "APIs",
+                "pages": [
+                  "es/apis/categories",
+                  "es/apis/users",
+                  "es/apis/channels",
+                  "es/apis/chat",
+                  "es/apis/livestreams",
+                  "es/apis/public-key"
+                ]
+              },
+              {
+                "group": "Eventos",
+                "pages": [
+                  "es/events/introduction",
+                  "es/events/webhooks",
+                  "es/events/subscribe-to-events",
+                  "es/events/webhook-payloads"
+                ]
+              },
+              {
+                "group": "¿Cómo contribuyo?",
+                "pages": [
+                  "es/how-do-i-contribute/contributing",
+                  "es/how-do-i-contribute/community-driven-projects"
+                ]
+              }
+            ]
+      },
+      {
+        "language": "zh",
+            "groups": [
+              {
+                "group": "欢迎",
+                "pages": [
+                  "zh/welcome"
+                ]
+              },
+              {
+                "group": "入门",
+                "pages": [
+                  "zh/getting-started/app-setup",
+                  "zh/getting-started/oauth-2-1",
+                  "zh/getting-started/scopes"
+                ]
+              },
+              {
+                "group": "接口",
+                "pages": [
+                  "zh/apis/categories",
+                  "zh/apis/users",
+                  "zh/apis/channels",
+                  "zh/apis/chat",
+                  "zh/apis/livestreams",
+                  "zh/apis/public-key"
+                ]
+              },
+              {
+                "group": "事件",
+                "pages": [
+                  "zh/events/introduction",
+                  "zh/events/webhooks",
+                  "zh/events/subscribe-to-events",
+                  "zh/events/webhook-payloads"
+                ]
+              },
+              {
+                "group": "如何贡献？",
+                "pages": [
+                  "zh/how-do-i-contribute/contributing",
+                  "zh/how-do-i-contribute/community-driven-projects"
+                ]
+              }
+            ]
+      },
+      {
+        "language": "fr",
+            "groups": [
+              {
+                "group": "Bienvenue",
+                "pages": [
+                  "fr/welcome"
+                ]
+              },
+              {
+                "group": "Démarrage",
+                "pages": [
+                  "fr/getting-started/app-setup",
+                  "fr/getting-started/oauth-2-1",
+                  "fr/getting-started/scopes"
+                ]
+              },
+              {
+                "group": "APIs",
+                "pages": [
+                  "fr/apis/categories",
+                  "fr/apis/users",
+                  "fr/apis/channels",
+                  "fr/apis/chat",
+                  "fr/apis/livestreams",
+                  "fr/apis/public-key"
+                ]
+              },
+              {
+                "group": "Événements",
+                "pages": [
+                  "fr/events/introduction",
+                  "fr/events/webhooks",
+                  "fr/events/subscribe-to-events",
+                  "fr/events/webhook-payloads"
+                ]
+              },
+              {
+                "group": "Comment contribuer ?",
+                "pages": [
+                  "fr/how-do-i-contribute/contributing",
+                  "fr/how-do-i-contribute/community-driven-projects"
+                ]
+              }
+            ]
+      },
+      {
+        "language": "ja",
+            "groups": [
+              {
+                "group": "ようこそ",
+                "pages": [
+                  "ja/welcome"
+                ]
+              },
+              {
+                "group": "開始方法",
+                "pages": [
+                  "ja/getting-started/app-setup",
+                  "ja/getting-started/oauth-2-1",
+                  "ja/getting-started/scopes"
+                ]
+              },
+              {
+                "group": "API",
+                "pages": [
+                  "ja/apis/categories",
+                  "ja/apis/users",
+                  "ja/apis/channels",
+                  "ja/apis/chat",
+                  "ja/apis/livestreams",
+                  "ja/apis/public-key"
+                ]
+              },
+              {
+                "group": "イベント",
+                "pages": [
+                  "ja/events/introduction",
+                  "ja/events/webhooks",
+                  "ja/events/subscribe-to-events",
+                  "ja/events/webhook-payloads"
+                ]
+              },
+              {
+                "group": "貢献するには？",
+                "pages": [
+                  "ja/how-do-i-contribute/contributing",
+                  "ja/how-do-i-contribute/community-driven-projects"
+                ]
+              }
+            ]
+      }
+    ],
+    "global": {}
+  },
+  "logo": {
+    "light": "/kick-dark.svg",
+    "dark": "/kick-light.svg"
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "GitHub",
+      "href": "https://github.com/KickEngineering/KickDevDocs"
+    },
+    "links": [
+      {
+        "label": "Community",
+        "href": "https://discord.gg/kick"
+      },
+      {
+        "label": "Roadmap",
+        "href": "https://github.com/orgs/KickEngineering/projects/3"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/KickEngineering/KickDevDocs",
+      "twitter": "https://x.com/KickStreaming",
+      "discord": "https://discord.gg/kick"
+    }
+  }
+}
