@@ -1,6 +1,8 @@
 # Rewritten in mintlify. 
 > Supports English, Spanish, Chinese (Simplified), Japanese, French
 
+![image](https://github.com/user-attachments/assets/b501f3c9-88c5-470c-8dd0-66db37ad8c48)
+
 # Welcome
 
 Hey there! Welcome to the KICK Dev Docs 👋
