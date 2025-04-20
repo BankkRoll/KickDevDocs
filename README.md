@@ -1,3 +1,6 @@
+# Rewritten in mintlify. 
+> Supports English, Spanish, Chinese (Simplified), Japanese, French
+
 # Welcome
 
 Hey there! Welcome to the KICK Dev Docs 👋
